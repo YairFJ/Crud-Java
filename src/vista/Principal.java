@@ -10,8 +10,8 @@ import com.mysql.jdbc.ResultSetImpl;
 import com.mysql.jdbc.Statement;
 import config.Conexion;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -50,6 +50,36 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(modelo);
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    void Agregar() {
+
+        String dni = txtDni.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+
+        if (dni.equals("") || nombre.equals("")) {
+            JOptionPane.showMessageDialog(null, "VACIO");
+        } else {
+            String sql = "insert into persona (dni, nombre, apellido) values ('" + dni + "', '" + nombre + "', '" + apellido + "')";
+
+            try {
+                cn = con.getConnection();
+                st = (Statement) cn.createStatement();
+                st.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "AGREGADO CON EXITO");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+    }
+    
+    void Barrer(){
+        for(int i=0;i<=tbDatos.getRowCount(); i++){
+            modelo.removeRow(i);
+            i=i-1;
         }
     }
 
